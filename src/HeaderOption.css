@@ -7,6 +7,12 @@
     cursor: pointer;
 }
 
+.HeaderOption__title {
+    font-size: 12px;
+    font-weight: 400;
+
+}
+
 .HeaderOption:hover {
     color:black;
 }
