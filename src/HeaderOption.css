@@ -1,0 +1,12 @@
+.HeaderOption {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 20px;
+    color: grey;
+    cursor: pointer;
+}
+
+.HeaderOption:hover {
+    color:black;
+}
