@@ -15,19 +15,30 @@ function Feed() {
     const[posts, setPosts] = useState([]);
 
     useEffect(()=>{
-        db.collection('posts')
+        console.log('Run useEffect')
+
+        // the below is real time a listener, that when a post is created on database it is pushed onto post state
+        const unsubscribe = db.collection('posts')
         .orderBy('timestamp', 'desc')
-        .onSnapshot(snapshot => (
-            setPosts(snapshot.docs.map(doc => (
+        .onSnapshot(snapshot => {
+            console.log('New snapshot')
+
+     
+            const newDocs = snapshot.docs.map(doc => (
                 {
                     id: doc.id,
                     data: doc.data(),
+                    date: new Date(),
                 }
-            )))
-        ))
+            ))
+            console.log('New snapshot docs', newDocs)
+            setPosts(newDocs)
+        })
+        return () => {
+            console.log('Running clean up to avoid memory leak');
+            unsubscribe()}
     }, [])
 
-    // the above is a real time listener, that when a post is created on database it is pushed onto post state
 
     const sendPost = e => {
         e.preventDefault();
