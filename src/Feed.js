@@ -8,13 +8,16 @@ import EventNoteIcon from '@material-ui/icons/EventNote';
 import CalendarViewDayIcon from '@material-ui/icons/CalendarViewDay';
 import Post from './Post';
 import { db } from './firebase';
+import firebase from 'firebase'
 
 function Feed() {
-
+    const[input, setInput] = useState("");
     const[posts, setPosts] = useState([]);
 
     useEffect(()=>{
-        db.collection('posts').onSnapshot(snapshot => (
+        db.collection('posts')
+        .orderBy('timestamp', 'desc')
+        .onSnapshot(snapshot => (
             setPosts(snapshot.docs.map(doc => (
                 {
                     id: doc.id,
@@ -28,7 +31,18 @@ function Feed() {
 
     const sendPost = e => {
         e.preventDefault();
-    }
+
+        db.collection('posts').add({
+            name: 'Akshar PATEL',
+            decsription: 'this da test',
+            message: input, 
+            photoURL: '',
+            timestamp: firebase.firestore.FieldValue.serverTimestamp()
+
+        });
+
+        setInput("");
+    };
 
     return (
         <div className='feed'>
@@ -36,7 +50,7 @@ function Feed() {
                 <div className="feed__input">
                     <CreateIcon />
                     <form>
-                        <input type="text" />
+                        <input value={input} onChange={e => setInput(e.target.value)} type="text" />
                         <button onClick={sendPost} type="submit">Send</button>
                     </form>
                 </div>
@@ -49,10 +63,15 @@ function Feed() {
             </div>
 
 
-            {posts.map((post) => (
-                <Post />
+            {posts.map(({ id, data: { name, description, message, photoURL} }) => (
+                <Post 
+                key={id}
+                name={name}
+                description={description}
+                message={message}ß
+                photoURL={photoURL}
+                />
             ))}
-            <Post name='Akshar' description='this is a test' message='Wow this worked'/>
 
         </div>
     )
