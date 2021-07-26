@@ -1,2 +1,8 @@
-# linkedin-clone-yt
-Follow along tutorial from YouTube - React.js/Firebase/Tailwind...
+# LinkedIn Clone
+
+## Stack
+- Next.js/React
+- Javascript
+- Redux
+- MaterialUI
+- Firebase/Firestore
