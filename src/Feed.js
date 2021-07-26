@@ -8,6 +8,9 @@ import CalendarViewDayIcon from '@material-ui/icons/CalendarViewDay';
 import Post from './Post';
 
 function Feed() {
+
+    const[posts, setPosts] = useState([])
+
     return (
         <div className='feed'>
             <div className="feed__inputContainer">
